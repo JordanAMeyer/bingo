@@ -21,13 +21,9 @@ bingo.getcard <- function() {
               5)
   y[3, 3] <- T
   
-  ## visual card
-  z <- x
-  
+  # combine matrices and return
   card <- list(n = x,
-               l = y,
-               v = z)
+               l = y)
   class(card) <- "bingo.card"
-  
   return(card)
 }
