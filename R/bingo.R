@@ -27,3 +27,17 @@ bingo.getcard <- function() {
   class(card) <- "bingo.card"
   return(card)
 }
+
+# S3 print method for bingo.card objects
+print.bingo.card <- function(x) {
+  x$n[x$l] <- "*"
+  dimnames(x$n) <- list(rep("",
+                            times = 5),
+                        c("B",
+                          "I",
+                          "N",
+                          "G",
+                          "O"))
+  print(x$n,
+        quote = F)
+}
