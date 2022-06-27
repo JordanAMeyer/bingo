@@ -1,2 +1,0 @@
-# Bingo Game Simulation in R
-The `bingo` package for R, which will provide an interface for conducting bingo game simulations, is still forthcoming. In the meantime, you can read about its [principles](principles.md) or contribute to the project on [GitHub](https://github.com/JordanAMeyer/bingo).
