@@ -1,3 +1,15 @@
+# check whether a card matches a configuration
+bingo.checkcard <- function(card,
+                            config) {
+  for(i in config) {
+    for(j in length(i[[1]])) {
+      if(!card$l[i[[1]][j],i[[2]][j]]) break
+      if(j == length(i[[1]])) return(T)
+    }
+  }
+  return(F)
+}
+
 # create a bingo.card object
 bingo.getcard <- function() {
   ## numeric card
