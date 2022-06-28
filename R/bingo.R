@@ -94,6 +94,25 @@ bingo.line <- function(type = "all") {
   return(x)
 }
 
+# mark a number on a card
+bingo.mark <- function(x, card) {
+  if(x %in% 1:15) y <- 1
+  else if(x %in% 16:30) z <- 2
+  else if(x %in% 31:45) z <- 3
+  else if(x %in% 46:60) z <- 4
+  else if(x %in% 61:75) z <- 5
+  else stop("x is not a valid bingo number")
+  
+  for(y in 1:5) {
+    if(card$n[y, z] == x) {
+      card$l[y, z] <- T
+      break
+    }
+  }
+  
+  return(card)
+}
+
 # S3 print method for bingo.card objects
 print.bingo.card <- function(x) {
   x$n[x$l] <- "*"
