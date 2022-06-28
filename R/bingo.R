@@ -28,6 +28,58 @@ bingo.getcard <- function() {
   return(card)
 }
 
+# straight line configuration
+bingo.line <- function(type = "all") {
+  bingo.line1 <- list(rep(1,
+                          5),
+                      1:5)
+  bingo.line2 <- list(rep(2,
+                          5),
+                      1:5)
+  bingo.line3 <- list(rep(3,
+                          5),
+                      1:5)
+  bingo.line4 <- list(rep(4,
+                          5),
+                      1:5)
+  bingo.line5 <- list(rep(5,
+                          5),
+                      1:5)
+  bingo.lineb <- list(1:5,
+                      rep(1,
+                          5))
+  bingo.linei <- list(1:5,
+                      rep(2,
+                          5))
+  bingo.linen <- list(1:5,
+                      rep(3,
+                          5))
+  bingo.lineg <- list(1:5,
+                      rep(4,
+                          5))
+  bingo.lineo <- list(1:5,
+                      rep(5,
+                          5))
+  bingo.lined1 <- list(1:5,
+                       1:5)
+  bingo.lined2 <- list(5:1,
+                       5:1)
+  if(type == "all") {
+    x <- list(bingo.line1,
+              bingo.line2,
+              bingo.line3,
+              bingo.line4,
+              bingo.line5,
+              bingo.lineb,
+              bingo.linei,
+              bingo.linen,
+              bingo.lineg,
+              bingo.lineo)
+  }
+  class(x) <- "bingo.config"
+  return(x)
+}
+
 # S3 print method for bingo.card objects
 print.bingo.card <- function(x) {
   x$n[x$l] <- "*"
