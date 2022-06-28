@@ -86,7 +86,9 @@ bingo.line <- function(type = "all") {
               bingo.linei,
               bingo.linen,
               bingo.lineg,
-              bingo.lineo)
+              bingo.lineo,
+              bingo.lined1,
+              bingo.lined2)
   }
   class(x) <- "bingo.config"
   return(x)
