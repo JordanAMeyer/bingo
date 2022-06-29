@@ -1,8 +1,27 @@
+bingo <- function(n,
+                  config,
+                  reps = 1000) {
+  n.balls <- c()
+  winners <- c()
+  for(i in 1:reps) {
+    game <- bingo.simulate(n,
+                           config)
+    n.balls <- append(n.balls,
+                      game$n.balls)
+    winners <- append(winners,
+                      game$winners)
+  }
+  cat(mean(n.balls),
+      "Balls on Average with",
+      mean(winners),
+      "winners.\n")
+}
+
 # check whether a card matches a configuration
 bingo.checkcard <- function(card,
                             config) {
   for(i in config) {
-    for(j in length(i[[1]])) {
+    for(j in 1:length(i[[1]])) {
       if(!card$l[i[[1]][j],i[[2]][j]]) break
       if(j == length(i[[1]])) return(T)
     }
@@ -75,7 +94,7 @@ bingo.line <- function(type = "all") {
   bingo.lined1 <- list(1:5,
                        1:5)
   bingo.lined2 <- list(5:1,
-                       5:1)
+                       1:5)
   if(type == "all") {
     x <- list(bingo.line1,
               bingo.line2,
@@ -122,9 +141,9 @@ bingo.simulate <- function(n,
   }
   balls <- sample(1:75,
                   75)
-  for(i in balls) {
+  for(i in 1:length(balls)) {
     cards <- lapply(cards,
-                    function(x) bingo.mark(i,
+                    function(x) bingo.mark(balls[i],
                                            x))
     winners <- sapply(cards,
                       function(x) bingo.checkcard(x,
@@ -134,7 +153,9 @@ bingo.simulate <- function(n,
     }
   }
   z <- list(n.balls = i,
-            winners = winners)
+            winners = sum(winners),
+            winners.l = winners,
+            cards = cards)
   class(z) <- "bingo.game"
   return(z)
 }
