@@ -25,7 +25,7 @@ bingo.getcard <- function() {
                        5)),
               5,
               5)
-  x[3, 3] <- NA
+  x[3, 3] <- 0
   
   ## logical card
   y <- matrix(F,
@@ -96,7 +96,7 @@ bingo.line <- function(type = "all") {
 
 # mark a number on a card
 bingo.mark <- function(x, card) {
-  if(x %in% 1:15) y <- 1
+  if(x %in% 1:15) z <- 1
   else if(x %in% 16:30) z <- 2
   else if(x %in% 31:45) z <- 3
   else if(x %in% 46:60) z <- 4
@@ -111,6 +111,32 @@ bingo.mark <- function(x, card) {
   }
   
   return(card)
+}
+
+# simulate a single bingo game
+bingo.simulate <- function(n,
+                           config) {
+  cards <- list()
+  for(i in 1:n) {
+    cards[[i]] <- bingo.getcard()
+  }
+  balls <- sample(1:75,
+                  75)
+  for(i in balls) {
+    cards <- lapply(cards,
+                    function(x) bingo.mark(i,
+                                           x))
+    winners <- sapply(cards,
+                      function(x) bingo.checkcard(x,
+                                                  config))
+    if(sum(winners) > 0) {
+      break
+    }
+  }
+  z <- list(n.balls = i,
+            winners = winners)
+  class(z) <- "bingo.game"
+  return(z)
 }
 
 # S3 print method for bingo.card objects
