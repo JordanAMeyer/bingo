@@ -175,8 +175,8 @@ bingo.space <- function(space) {
   else if(y.char == "g") y <- 4
   else if(y.char == "o") y <- 5
   
-  z <- list(c(x),
-            c(y))
+  z <- list(list(c(x),
+                 c(y)))
   class(z) <- "bingo.config"
   return(z)
   
