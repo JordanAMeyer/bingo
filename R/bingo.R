@@ -160,6 +160,28 @@ bingo.simulate <- function(n,
   return(z)
 }
 
+# create a bingo.config object referencing a single space
+bingo.space <- function(space) {
+  x <- as.numeric(substr(space,
+                         2,
+                         2))
+  
+  y.char <- substr(space,
+                   1,
+                   1)
+  if(y.char == "b") y <- 1
+  else if(y.char == "i") y <- 2
+  else if(y.char == "n") y <- 3
+  else if(y.char == "g") y <- 4
+  else if(y.char == "o") y <- 5
+  
+  z <- list(c(x),
+            c(y))
+  class(z) <- "bingo.config"
+  return(z)
+  
+}
+
 # S3 print method for bingo.card objects
 print.bingo.card <- function(x) {
   x$n[x$l] <- "*"
