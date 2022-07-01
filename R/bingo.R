@@ -1,3 +1,24 @@
+`+.bingo.config` <- function(x,
+                             y) {
+  z <- list()
+  for(i in 1:length(x)) {
+    for(j in 1:length(y)) {
+      if(setequal(x[[i]][[1]], y[[j]][[1]]) &
+         setequal(x[[i]][[2]], y[[j]][[2]])) next
+      else {
+        z1 <- append(x[[i]][[1]],
+                     y[[j]][[1]])
+        z2 <- append(x[[i]][[2]],
+                     y[[i]][[2]])
+        z <- append(z,
+                    list(list(z1,
+                              z2)))
+      }
+    }
+  }
+  return(z)
+}
+
 bingo <- function(n,
                   config,
                   reps = 1000) {
@@ -61,54 +82,78 @@ bingo.getcard <- function() {
 
 # straight line configuration
 bingo.line <- function(type = "all") {
-  bingo.line1 <- list(rep(1,
-                          5),
-                      1:5)
-  bingo.line2 <- list(rep(2,
-                          5),
-                      1:5)
-  bingo.line3 <- list(rep(3,
-                          5),
-                      1:5)
-  bingo.line4 <- list(rep(4,
-                          5),
-                      1:5)
-  bingo.line5 <- list(rep(5,
-                          5),
-                      1:5)
-  bingo.lineb <- list(1:5,
-                      rep(1,
-                          5))
-  bingo.linei <- list(1:5,
-                      rep(2,
-                          5))
-  bingo.linen <- list(1:5,
-                      rep(3,
-                          5))
-  bingo.lineg <- list(1:5,
-                      rep(4,
-                          5))
-  bingo.lineo <- list(1:5,
-                      rep(5,
-                          5))
-  bingo.lined1 <- list(1:5,
-                       1:5)
-  bingo.lined2 <- list(5:1,
-                       1:5)
-  if(type == "all") {
-    x <- list(bingo.line1,
-              bingo.line2,
-              bingo.line3,
-              bingo.line4,
-              bingo.line5,
-              bingo.lineb,
-              bingo.linei,
-              bingo.linen,
-              bingo.lineg,
-              bingo.lineo,
-              bingo.lined1,
-              bingo.lined2)
-  }
+  bingo.line1 <- bingo.space("b1") +
+    bingo.space("i1") +
+    bingo.space("n1") +
+    bingo.space("g1") +
+    bingo.space("o1")
+  bingo.line2 <- bingo.space("b2") +
+    bingo.space("i2") +
+    bingo.space("n2") +
+    bingo.space("g2") +
+    bingo.space("o2")
+  bingo.line3 <- bingo.space("b3") +
+    bingo.space("i3") +
+    bingo.space("n3") +
+    bingo.space("g3") +
+    bingo.space("o3")
+  bingo.line4 <- bingo.space("b4") +
+    bingo.space("i4") +
+    bingo.space("n4") +
+    bingo.space("g4") +
+    bingo.space("o4")
+  bingo.line5 <- bingo.space("b5") +
+    bingo.space("i5") +
+    bingo.space("n5") +
+    bingo.space("g5") +
+    bingo.space("o5")
+  bingo.lineb <- bingo.space("b1") +
+    bingo.space("b2") +
+    bingo.space("b3") +
+    bingo.space("b4") +
+    bingo.space("b5")
+  bingo.linei <- bingo.space("i1") +
+    bingo.space("i2") +
+    bingo.space("i3") +
+    bingo.space("i4") +
+    bingo.space("i5")
+  bingo.linen <- bingo.space("n1") +
+    bingo.space("n2") +
+    bingo.space("n3") +
+    bingo.space("n4") +
+    bingo.space("n5")
+  bingo.lineg <- bingo.space("g1") +
+    bingo.space("g2") +
+    bingo.space("g3") +
+    bingo.space("g4") +
+    bingo.space("g5")
+  bingo.lineo <- bingo.space("o1") +
+    bingo.space("o2") +
+    bingo.space("o3") +
+    bingo.space("o4") +
+    bingo.space("o5")
+  bingo.lined1 <- bingo.space("b1") +
+    bingo.space("i2") +
+    bingo.space("n3") +
+    bingo.space("g4") +
+    bingo.space("o5")
+  bingo.lined2 <- bingo.space("b5") +
+    bingo.space("i4") +
+    bingo.space("n3") +
+    bingo.space("g2") +
+    bingo.space("o1")
+  if(type == "row1") x <- bingo.line1
+  else if(type == "row2") x <- bingo.line2
+  else if(type == "row3") x <- bingo.line3
+  else if(type == "row4") x <- bingo.line4
+  else if(type == "row5") x <- bingo.line5
+  else if(type == "colb") x <- bingo.lineb
+  else if(type == "coli") x <- bingo.linei
+  else if(type == "coln") x <- bingo.linen
+  else if(type == "colg") x <- bingo.lineg
+  else if(type == "colo") x <- bingo.lineo
+  else if(type == "diag1") x <- bingo.lined1
+  else if(type == "diag2") x <- bingo.lined2
   class(x) <- "bingo.config"
   return(x)
 }
