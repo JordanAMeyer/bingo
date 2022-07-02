@@ -264,3 +264,17 @@ print.bingo.card <- function(x) {
   print(x$n,
         quote = F)
 }
+
+# S3 print method for bingo.config object
+print.bingo.config <- function(x) {
+  for(i in x) {
+    y <- bingo.getcard()
+    y$l[3, 3] <- F
+    y$n[3, 3] <- "X"
+    for(j in 1:length(i[[1]])) {
+      y$l[i[[1]][j], i[[2]][j]] <- T
+    }
+    print(y)
+    cat("\n")
+  }
+}
