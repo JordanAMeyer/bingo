@@ -19,6 +19,16 @@
   return(z)
 }
 
+# function for combining multiple possible winning patterns
+bingo.either <- function(...) {
+  x <- list()
+  for(i in 1:...length()) {
+    x <- append(x,
+                ...elt(i))
+  }
+  return(x)
+}
+
 bingo <- function(n,
                   config,
                   reps = 1000) {
