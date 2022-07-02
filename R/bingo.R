@@ -16,6 +16,7 @@
       }
     }
   }
+  class(z) <- "bingo.config"
   return(z)
 }
 
@@ -26,6 +27,7 @@ bingo.either <- function(...) {
     x <- append(x,
                 ...elt(i))
   }
+  class(x) <- "bingo.config"
   return(x)
 }
 
