@@ -164,6 +164,18 @@ bingo.line <- function(type = "all") {
   else if(type == "colo") x <- bingo.lineo
   else if(type == "diag1") x <- bingo.lined1
   else if(type == "diag2") x <- bingo.lined2
+  else if(type == "all") x <- bingo.either(bingo.line1,
+                                           bingo.line2,
+                                           bingo.line3,
+                                           bingo.line4,
+                                           bingo.line5,
+                                           bingo.lineb,
+                                           bingo.linei,
+                                           bingo.linen,
+                                           bingo.lineg,
+                                           bingo.lineo,
+                                           bingo.lined1,
+                                           bingo.lined2)
   class(x) <- "bingo.config"
   return(x)
 }
