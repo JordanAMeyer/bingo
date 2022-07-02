@@ -278,3 +278,11 @@ print.bingo.config <- function(x) {
     cat("\n")
   }
 }
+
+print.bingo.sim <- function(x) {
+  cat("Average Game:",
+      mean(x$n.balls),
+      "balls with",
+      mean(x$winners),
+      "winners.\n")
+}
