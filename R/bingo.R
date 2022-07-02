@@ -44,10 +44,10 @@ bingo <- function(n,
     winners <- append(winners,
                       game$winners)
   }
-  cat(mean(n.balls),
-      "Balls on Average with",
-      mean(winners),
-      "winners.\n")
+  x <- list(n.balls = n.balls,
+            winners = winners)
+  class(x) <- "bingo.sim"
+  return(x)
 }
 
 # check whether a card matches a configuration
