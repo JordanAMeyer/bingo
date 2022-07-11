@@ -33,9 +33,11 @@ bingo.either <- function(...) {
 
 bingo <- function(n,
                   config,
+                  player.cards = 12,
                   reps = 1000) {
   n.balls <- c()
   winners <- c()
+  player.wins <- c()
   for(i in 1:reps) {
     game <- bingo.simulate(n,
                            config)
@@ -43,9 +45,12 @@ bingo <- function(n,
                       game$n.balls)
     winners <- append(winners,
                       game$winners)
+    player.wins <- append(player.wins,
+                          T %in% game$winners.l[1:player.cards])
   }
   x <- list(n.balls = n.balls,
-            winners = winners)
+            winners = winners,
+            player.wins = player.wins)
   class(x) <- "bingo.sim"
   return(x)
 }
@@ -280,11 +285,13 @@ print.bingo.config <- function(x) {
 }
 
 print.bingo.sim <- function(x) {
-  cat("Average Game:",
+  cat("Mean Number of Balls until Win:",
       mean(x$n.balls),
-      "balls with",
+      "\nMean Number of Winners per Game:",
       mean(x$winners),
-      "winners.\n")
+      "\n% Player Wins:",
+      round(mean(x$player.wins) * 100,
+            1))
 }
 
 # S3 summary method for bingo.sim objects
