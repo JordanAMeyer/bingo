@@ -293,39 +293,3 @@ print.bingo.sim <- function(x) {
       round(mean(x$player.wins) * 100,
             1))
 }
-
-# S3 summary method for bingo.sim objects
-summary.bingo.sim <- function(x,
-                              p = 0.95) {
-  conf.balls <- c(mean(x$n.balls) - (qt(p,
-                                        length(x$n.balls)) *
-                                       sd(x$n.balls) /
-                                       sqrt(length(x$n.balls))),
-                  mean(x$n.balls) + (qt(p,
-                                        length(x$n.balls)) *
-                                       sd(x$n.balls) /
-                                       sqrt(length(x$n.balls))))
-  conf.wins <- c(mean(x$winners) - (qt(p,
-                                       length(x$winners)) *
-                                      sd(x$winners) /
-                                      sqrt(length(x$winners))),
-                 mean(x$winners) + (qt(p,
-                                       length(x$winners)) *
-                                      sd(x$winners) /
-                                      sqrt(length(x$winners))))
-  cat(length(x$n.balls),
-      " Bingo Simulations\nAverage # Balls: ",
-      mean(x$n.balls),
-      " (",
-      conf.balls[1],
-      ", ",
-      conf.balls[2],
-      ")\nAverage # Winners: ",
-      mean(x$winners),
-      " (",
-      conf.wins[1],
-      ", ",
-      conf.wins[2],
-      ")",
-      sep = "")
-}
