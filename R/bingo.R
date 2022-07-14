@@ -3,13 +3,13 @@
   z <- list()
   for(i in 1:length(x)) {
     for(j in 1:length(y)) {
-      if(setequal(x[[i]][[1]], y[[j]][[1]]) &
-         setequal(x[[i]][[2]], y[[j]][[2]])) next
+      if(identical(x[[i]][[1]], y[[j]][[1]]) &
+         identical(x[[i]][[2]], y[[j]][[2]])) next
       else {
         z1 <- append(x[[i]][[1]],
                      y[[j]][[1]])
         z2 <- append(x[[i]][[2]],
-                     y[[i]][[2]])
+                     y[[j]][[2]])
         z <- append(z,
                     list(list(z1,
                               z2)))
