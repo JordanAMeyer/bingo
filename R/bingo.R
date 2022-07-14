@@ -58,6 +58,7 @@ bingo <- function(n,
   n.balls <- c()
   winners <- c()
   player.wins <- c()
+  progress <- txtProgressBar(style = 3)
   for(i in 1:reps) {
     game <- bingo.simulate(n,
                            config)
@@ -67,6 +68,8 @@ bingo <- function(n,
                       game$winners)
     player.wins <- append(player.wins,
                           T %in% game$winners.l[1:player.cards])
+    setTxtProgressBar(progress,
+                      i / reps)
   }
   x <- list(n.balls = n.balls,
             winners = winners,
@@ -305,7 +308,7 @@ print.bingo.config <- function(x) {
 }
 
 print.bingo.sim <- function(x) {
-  cat("Mean Number of Balls until Win:",
+  cat("\nMean Number of Balls until Win:",
       mean(x$n.balls),
       "\nMean Number of Winners per Game:",
       mean(x$winners),
