@@ -54,14 +54,16 @@ bingo.either <- function(...) {
 bingo <- function(n,
                   config,
                   player.cards = 12,
-                  reps = 1000) {
+                  reps = 1000,
+                  ...) {
   n.balls <- c()
   winners <- c()
   player.wins <- c()
   progress <- txtProgressBar(style = 3)
   for(i in 1:reps) {
     game <- bingo.simulate(n,
-                           config)
+                           config,
+                           ...)
     n.balls <- append(n.balls,
                       game$n.balls)
     winners <- append(winners,
@@ -231,13 +233,32 @@ bingo.mark <- function(x, card) {
 
 # simulate a single bingo game
 bingo.simulate <- function(n,
-                           config) {
+                           config,
+                           odd.even = F) {
   cards <- list()
   for(i in 1:n) {
     cards[[i]] <- bingo.getcard()
   }
   balls <- sample(1:75,
                   75)
+  if(odd.even & balls[1] %% 2 != 0) {
+    balls.odd <- balls[balls %% 2 != 0]
+    for(i in balls.odd) {
+      cards <- lapply(cards,
+                      function(x) bingo.mark(i,
+                                             x))
+    }
+    balls <- balls[balls %% 2 == 0]
+  }
+  else if(odd.even & balls[1] %% 2 == 0) {
+    balls.even <- balls[balls %% 2 == 0]
+    for(i in balls.even) {
+      cards <- lapply(cards,
+                      function(x) bingo.mark(i,
+                                             x))
+    }
+    balls <- balls[balls %% 2 != 0]
+  }
   for(i in 1:length(balls)) {
     cards <- lapply(cards,
                     function(x) bingo.mark(balls[i],
