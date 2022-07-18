@@ -20,6 +20,28 @@
   return(z)
 }
 
+`*.bingo.config` <- function(x,
+                             y) {
+  type.error <- "bingo.config objects can only be multiplied by a whole number"
+  if((!is.numeric(x) & !is.numeric(y))) stop(type.error)
+  else if(is.numeric(x)) {
+    if(x %% 1 != 0) stop(type.error)
+    num <- x
+    config <- y
+  }
+  else if(is.numeric(y)) {
+    if(y %% 1 != 0) stop(type.error)
+    config <- x
+    num <- y
+  }
+  
+  z <- config
+  for(i in 1:(num - 1)) {
+    z <- z + config
+  }
+  return(z)
+}
+
 # cluster configuration
 bingo.cluster <- function() {
   bingo.either(bingo.space("b1") + bingo.space("i1") + bingo.space("b2") + bingo.space("i2"),
