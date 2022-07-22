@@ -9,6 +9,9 @@
       
       if(identical(i$spaces,
                    j$spaces)) next
+      else if((!i$interlocking |
+               !j$interlocking) & nrow(merge(i$spaces,
+                                             j$spaces)) > 0) next
       
       df <- rbind(i$spaces,
                   j$spaces)
@@ -20,10 +23,14 @@
                      df$y),]
       rownames(df) <- 1:nrow(df)
       
+      interlocking <- i$interlocking | j$interlocking
+      
       if(!exists("x",
-                 inherits = F)) x <- list(list(spaces = df))
+                 inherits = F)) x <- list(list(spaces = df,
+                                               interlocking = interlocking))
       else x <- append(x,
-                       list(list(spaces = df)))
+                       list(list(spaces = df,
+                                 interlocking = interlocking)))
     }
   }
   x <- x[!duplicated(x)]
@@ -328,10 +335,25 @@ bingo.space <- function(space) {
   else if(y.char == "o") y <- 5
   
   z <- list(list(spaces = data.frame(x = x,
-                                     y = y)))
+                                     y = y),
+                 interlocking = T))
   class(z) <- "bingo.config"
   return(z)
   
+}
+
+no.interlock <- function(x) {
+  if(class(x) != "bingo.config") stop("x must be a bingo.config object")
+  
+  for(i in x) {
+    if(!exists("y")) y <- list(list(spaces = i$spaces,
+                                    interlocking = F))
+    else y <- append(y,
+                     list(list(spaces = i$spaces,
+                               interlocking = F)))
+  }
+  class(y) <- "bingo.config"
+  return(y)
 }
 
 # S3 print method for bingo.card objects
