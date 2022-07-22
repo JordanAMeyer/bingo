@@ -1,23 +1,34 @@
-`+.bingo.config` <- function(x,
-                             y) {
-  z <- list()
-  for(i in 1:length(x)) {
-    for(j in 1:length(y)) {
-      if(identical(x[[i]][[1]], y[[j]][[1]]) &
-         identical(x[[i]][[2]], y[[j]][[2]])) next
-      else {
-        z1 <- append(x[[i]][[1]],
-                     y[[j]][[1]])
-        z2 <- append(x[[i]][[2]],
-                     y[[j]][[2]])
-        z <- append(z,
-                    list(list(z1,
-                              z2)))
-      }
+`+.bingo.config` <- function(e1,
+                             e2) {
+  for(i in e1) {
+    for(j in e2) {
+      i$spaces <- i$spaces[order(i$spaces$x,
+                                 i$spaces$y),]
+      j$spaces <- j$spaces[order(j$spaces$x,
+                                 j$spaces$y),]
+      
+      if(identical(i$spaces,
+                   j$spaces)) next
+      
+      df <- rbind(i$spaces,
+                  j$spaces)
+      df <- df[!duplicated(df),]
+      
+      if(identical(i$spaces, df)) next
+      
+      df <- df[order(df$x,
+                     df$y),]
+      rownames(df) <- 1:nrow(df)
+      
+      if(!exists("x",
+                 inherits = F)) x <- list(list(spaces = df))
+      else x <- append(x,
+                       list(list(spaces = df)))
     }
   }
-  class(z) <- "bingo.config"
-  return(z)
+  x <- x[!duplicated(x)]
+  class(x) <- "bingo.config"
+  return(x)
 }
 
 `*.bingo.config` <- function(x,
@@ -106,9 +117,10 @@ bingo <- function(n,
 bingo.checkcard <- function(card,
                             config) {
   for(i in config) {
-    for(j in 1:length(i[[1]])) {
-      if(!card$l[i[[1]][j],i[[2]][j]]) break
-      if(j == length(i[[1]])) return(T)
+    for(j in 1:nrow(i$spaces)) {
+      if(!card$l[i$spaces$x[j],i$spaces$y[j]]) break
+      
+      if(j == nrow(i$spaces)) return(T)
     }
   }
   return(F)
@@ -315,8 +327,8 @@ bingo.space <- function(space) {
   else if(y.char == "g") y <- 4
   else if(y.char == "o") y <- 5
   
-  z <- list(list(c(x),
-                 c(y)))
+  z <- list(list(spaces = data.frame(x = x,
+                                     y = y)))
   class(z) <- "bingo.config"
   return(z)
   
@@ -342,8 +354,8 @@ print.bingo.config <- function(x) {
     y <- bingo.getcard()
     y$l[3, 3] <- F
     y$n[3, 3] <- "X"
-    for(j in 1:length(i[[1]])) {
-      y$l[i[[1]][j], i[[2]][j]] <- T
+    for(j in 1:nrow(i$spaces)) {
+      y$l[i$spaces$x[j], i$spaces$y[j]] <- T
     }
     print(y)
     cat("\n")
