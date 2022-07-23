@@ -268,7 +268,25 @@ pattern.cluster <- function() {
            bingo.space("o5"))
 }
 
-
+# picture frame configuration
+pattern.frame <- function(type = "large") {
+  if(type == "large") {
+    x <- bingo.space("b1") + bingo.space("i1") + bingo.space("n1") +
+      bingo.space("g1") + bingo.space("o1") + bingo.space("o2") +
+      bingo.space("o3") + bingo.space("o4") + bingo.space("o5") +
+      bingo.space("g5") + bingo.space("n5") + bingo.space("i5") +
+      bingo.space("b5") + bingo.space("b4") + bingo.space("b3") +
+      bingo.space("b2")
+    return(x)
+  }
+  else if(type == "small") {
+    x <- bingo.space("i2") + bingo.space("n2") + bingo.space("g2") +
+      bingo.space("g3") + bingo.space("g4") + bingo.space("n4") +
+      bingo.space("i4") + bingo.space("i3")
+    return(x)
+  }
+  else stop("frame type not recognized")
+}
 
 # straight line configuration
 pattern.line <- function(type = "all") {
