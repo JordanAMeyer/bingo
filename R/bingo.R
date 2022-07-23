@@ -268,6 +268,11 @@ pattern.cluster <- function() {
            bingo.space("o5"))
 }
 
+pattern.corners <- function() {
+  return(bingo.space("b1") + bingo.space("b5") + bingo.space("o1") +
+           bingo.space("o5"))
+}
+
 # picture frame configuration
 pattern.frame <- function(type = "large") {
   if(type == "large") {
