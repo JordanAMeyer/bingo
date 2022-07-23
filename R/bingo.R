@@ -9,9 +9,9 @@
       
       if(identical(i$spaces,
                    j$spaces)) next
-      else if((!i$interlocking |
-               !j$interlocking) & nrow(merge(i$spaces,
-                                             j$spaces)) > 0) next
+      else if(!i$interlocking & !j$interlocking &
+              nrow(merge(i$spaces,
+                         j$spaces)) > 0) next
       
       df <- rbind(i$spaces,
                   j$spaces)
@@ -234,38 +234,38 @@ either <- function(...) {
 
 # cluster configuration
 pattern.cluster <- function() {
-  bingo.either(bingo.space("b1") + bingo.space("i1") + bingo.space("b2") +
-                 bingo.space("i2"),
-               bingo.space("b2") + bingo.space("i2") + bingo.space("b3") +
-                 bingo.space("i3"),
-               bingo.space("b3") + bingo.space("i3") + bingo.space("b4") +
-                 bingo.space("i4"),
-               bingo.space("b4") + bingo.space("i4") + bingo.space("b5") +
-                 bingo.space("i5"),
-               bingo.space("i1") + bingo.space("n1") + bingo.space("i2") +
-                 bingo.space("n2"),
-               bingo.space("i2") + bingo.space("n2") + bingo.space("i3") +
-                 bingo.space("n3"),
-               bingo.space("i3") + bingo.space("n3") + bingo.space("i4") +
-                 bingo.space("n4"),
-               bingo.space("i4") + bingo.space("n4") + bingo.space("i5") +
-                 bingo.space("n5"),
-               bingo.space("n1") + bingo.space("g1") + bingo.space("n2") +
-                 bingo.space("g2"),
-               bingo.space("n2") + bingo.space("g2") + bingo.space("n3") +
-                 bingo.space("g3"),
-               bingo.space("n3") + bingo.space("g3") + bingo.space("n4") +
-                 bingo.space("g4"),
-               bingo.space("n4") + bingo.space("g4") + bingo.space("n5") +
-                 bingo.space("g5"),
-               bingo.space("g1") + bingo.space("o1") + bingo.space("g2") +
-                 bingo.space("o2"),
-               bingo.space("g2") + bingo.space("o2") + bingo.space("g3") +
-                 bingo.space("o3"),
-               bingo.space("g3") + bingo.space("o3") + bingo.space("g4") +
-                 bingo.space("o4"),
-               bingo.space("g4") + bingo.space("o4") + bingo.space("g5") +
-                 bingo.space("o5"))
+  either(bingo.space("b1") + bingo.space("i1") + bingo.space("b2") +
+           bingo.space("i2"),
+         bingo.space("b2") + bingo.space("i2") + bingo.space("b3") +
+           bingo.space("i3"),
+         bingo.space("b3") + bingo.space("i3") + bingo.space("b4") +
+           bingo.space("i4"),
+         bingo.space("b4") + bingo.space("i4") + bingo.space("b5") +
+           bingo.space("i5"),
+         bingo.space("i1") + bingo.space("n1") + bingo.space("i2") +
+           bingo.space("n2"),
+         bingo.space("i2") + bingo.space("n2") + bingo.space("i3") +
+           bingo.space("n3"),
+         bingo.space("i3") + bingo.space("n3") + bingo.space("i4") +
+           bingo.space("n4"),
+         bingo.space("i4") + bingo.space("n4") + bingo.space("i5") +
+           bingo.space("n5"),
+         bingo.space("n1") + bingo.space("g1") + bingo.space("n2") +
+           bingo.space("g2"),
+         bingo.space("n2") + bingo.space("g2") + bingo.space("n3") +
+           bingo.space("g3"),
+         bingo.space("n3") + bingo.space("g3") + bingo.space("n4") +
+           bingo.space("g4"),
+         bingo.space("n4") + bingo.space("g4") + bingo.space("n5") +
+           bingo.space("g5"),
+         bingo.space("g1") + bingo.space("o1") + bingo.space("g2") +
+           bingo.space("o2"),
+         bingo.space("g2") + bingo.space("o2") + bingo.space("g3") +
+           bingo.space("o3"),
+         bingo.space("g3") + bingo.space("o3") + bingo.space("g4") +
+           bingo.space("o4"),
+         bingo.space("g4") + bingo.space("o4") + bingo.space("g5") +
+           bingo.space("o5"))
 }
 
 
@@ -344,18 +344,18 @@ pattern.line <- function(type = "all") {
   else if(type == "colo") x <- bingo.lineo
   else if(type == "diag1") x <- bingo.lined1
   else if(type == "diag2") x <- bingo.lined2
-  else if(type == "all") x <- bingo.either(bingo.line1,
-                                           bingo.line2,
-                                           bingo.line3,
-                                           bingo.line4,
-                                           bingo.line5,
-                                           bingo.lineb,
-                                           bingo.linei,
-                                           bingo.linen,
-                                           bingo.lineg,
-                                           bingo.lineo,
-                                           bingo.lined1,
-                                           bingo.lined2)
+  else if(type == "all") x <- either(bingo.line1,
+                                     bingo.line2,
+                                     bingo.line3,
+                                     bingo.line4,
+                                     bingo.line5,
+                                     bingo.lineb,
+                                     bingo.linei,
+                                     bingo.linen,
+                                     bingo.lineg,
+                                     bingo.lineo,
+                                     bingo.lined1,
+                                     bingo.lined2)
   class(x) <- "bingo.config"
   return(x)
 }
@@ -391,7 +391,7 @@ print.bingo.card <- function(x) {
 # S3 print method for bingo.config object
 print.bingo.config <- function(x) {
   for(i in x) {
-    y <- bingo.getcard()
+    y <- card.get()
     y$l[3, 3] <- F
     y$n[3, 3] <- "X"
     for(j in 1:nrow(i$spaces)) {
