@@ -1,3 +1,5 @@
+require(parallel)
+
 `+.bingo.config` <- function(e1,
                              e2) {
   for(i in e1) {
@@ -64,29 +66,63 @@ bingo <- function(n,
                   config,
                   player.cards = 12,
                   reps = 1000,
-                  ...) {
+                  cores = 1,
+                  odd.even = F) {
+  run <- function(rep.n,
+                  n,
+                  config,
+                  odd.even) {
+    source("R/bingo.R")
+    x <- bingo.simulate(n = n,
+                        config = config,
+                        odd.even = odd.even)
+    return(x)
+  }
+  cl <- makeCluster(cores)
+  x <- clusterApplyLB(cl,
+                      1:reps,
+                      run,
+                      n = n,
+                      config = config,
+                      odd.even = odd.even)
+  stopCluster(cl)
   n.balls <- c()
   winners <- c()
   player.wins <- c()
-  progress <- txtProgressBar(style = 3)
-  for(i in 1:reps) {
-    game <- bingo.simulate(n,
-                           config,
-                           ...)
+  for(i in x) {
     n.balls <- append(n.balls,
-                      game$n.balls)
+                      i$n.balls)
     winners <- append(winners,
-                      game$winners)
+                      i$winners)
     player.wins <- append(player.wins,
-                          T %in% game$winners.l[1:player.cards])
-    setTxtProgressBar(progress,
-                      i / reps)
+                          T %in% i$winners.l[1:player.cards])
   }
-  x <- list(n.balls = n.balls,
+  y <- list(n.balls = n.balls,
             winners = winners,
             player.wins = player.wins)
-  class(x) <- "bingo.sim"
-  return(x)
+  class(y) <- "bingo.sim"
+  return(y)
+  # n.balls <- c()
+  # winners <- c()
+  # player.wins <- c()
+  # for(i in 1:reps) {
+  #   game <- bingo.simulate(n,
+  #                          config,
+  #                          ...)
+  #   n.balls <- append(n.balls,
+  #                     game$n.balls)
+  #   winners <- append(winners,
+  #                     game$winners)
+  #   player.wins <- append(player.wins,
+  #                         T %in% game$winners.l[1:player.cards])
+  #   setTxtProgressBar(progress,
+  #                     i / reps)
+  # }
+  # x <- list(n.balls = n.balls,
+  #           winners = winners,
+  #           player.wins = player.wins)
+  # class(x) <- "bingo.sim"
+  # return(x)
 }
 
 # simulate a single bingo game
