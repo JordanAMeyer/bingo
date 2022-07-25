@@ -102,27 +102,6 @@ bingo <- function(n,
             player.wins = player.wins)
   class(y) <- "bingo.sim"
   return(y)
-  # n.balls <- c()
-  # winners <- c()
-  # player.wins <- c()
-  # for(i in 1:reps) {
-  #   game <- bingo.simulate(n,
-  #                          config,
-  #                          ...)
-  #   n.balls <- append(n.balls,
-  #                     game$n.balls)
-  #   winners <- append(winners,
-  #                     game$winners)
-  #   player.wins <- append(player.wins,
-  #                         T %in% game$winners.l[1:player.cards])
-  #   setTxtProgressBar(progress,
-  #                     i / reps)
-  # }
-  # x <- list(n.balls = n.balls,
-  #           winners = winners,
-  #           player.wins = player.wins)
-  # class(x) <- "bingo.sim"
-  # return(x)
 }
 
 # simulate a single bingo game
