@@ -145,8 +145,7 @@ bingo.simulate <- function(n,
   }
   z <- list(n.balls = i,
             winners = sum(winners),
-            winners.l = winners,
-            cards = cards)
+            winners.l = winners)
   class(z) <- "bingo.game"
   return(z)
 }
