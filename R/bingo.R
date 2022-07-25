@@ -288,6 +288,11 @@ pattern.corners <- function() {
            bingo.space("o5"))
 }
 
+pattern.coverall <- function() {
+  return(pattern.line("colb") + pattern.line("coli") + pattern.line("coln") +
+           pattern.line("colg") + pattern.line("colo"))
+}
+
 # picture frame configuration
 pattern.frame <- function(type = "large") {
   if(type == "large") {
